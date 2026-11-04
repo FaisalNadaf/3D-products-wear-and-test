@@ -1,0 +1,302 @@
+[
+  {
+    "file": "modern-living-room-black-windows",
+    "provider": "unsplash",
+    "sourceId": "unsplash:yQvGZRrnk30",
+    "title": "Bright modern living room interior with white sofas, natural wood flooring, and large black-framed windows. Minimalist luxury home featuring a contemporary chandelier, fireplace, and clean neutral design with abundant natural light. High-end residential interior showcasing elegant craftsmanship and timeless style.",
+    "author": "GoodLifeConstruction",
+    "authorUrl": "https://unsplash.com/@goodlifeconstruction",
+    "sourceUrl": "https://unsplash.com/photos/spacious-modern-living-room-with-white-sofas-and-fireplace-yQvGZRrnk30",
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license",
+    "attributionRequired": false,
+    "creditLine": "Photo by GoodLifeConstruction on Unsplash",
+    "downloadedAt": "2026-11-04T14:59:15.048Z",
+    "files": [
+      "public/rooms/modern-living-room-black-windows-640w.webp",
+      "public/rooms/modern-living-room-black-windows-640w.jpg",
+      "public/rooms/modern-living-room-black-windows-1024w.webp",
+      "public/rooms/modern-living-room-black-windows-1024w.jpg",
+      "public/rooms/modern-living-room-black-windows.webp",
+      "public/rooms/modern-living-room-black-windows.jpg"
+    ]
+  },
+  {
+    "file": "boutique",
+    "provider": "pexels",
+    "sourceId": "pexels:33257668",
+    "title": "A stunning jewelry store interior featuring modern design with elegant lighting and showcases.",
+    "author": "Rana Matloob Hussain",
+    "authorUrl": "https://www.pexels.com/@ranamatloob567",
+    "sourceUrl": "https://www.pexels.com/photo/luxurious-jewelry-store-interior-with-elegant-display-33257668/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "attributionRequired": false,
+    "creditLine": "Photo by Rana Matloob Hussain on Pexels",
+    "downloadedAt": "2026-11-04T14:59:18.404Z",
+    "files": [
+      "public/backgrounds/boutique-1280w.webp",
+      "public/backgrounds/boutique-1280w.jpg",
+      "public/backgrounds/boutique.webp",
+      "public/backgrounds/boutique.jpg"
+    ]
+  },
+  {
+    "file": "salon",
+    "provider": "unsplash",
+    "sourceId": "unsplash:TZrIcCaAZFk",
+    "title": "A wide view of a bright, luxurious bridal boutique interior. Stunning white wedding gowns featuring intricate lace details and long, sweeping trains are beautifully displayed on striking gold mannequins. The modern retail space is characterized by light hardwood floors, an elegant gold clothing rack, and a large front window that fills the room with soft natural light.",
+    "author": "Lucas T Photography",
+    "authorUrl": "https://unsplash.com/@lucastphotography",
+    "sourceUrl": "https://unsplash.com/photos/a-bright-bridal-boutique-with-multiple-wedding-dresses-on-mannequins-TZrIcCaAZFk",
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license",
+    "attributionRequired": false,
+    "creditLine": "Photo by Lucas T Photography on Unsplash",
+    "downloadedAt": "2026-11-04T14:59:21.535Z",
+    "files": [
+      "public/backgrounds/salon-1280w.webp",
+      "public/backgrounds/salon-1280w.jpg",
+      "public/backgrounds/salon.webp",
+      "public/backgrounds/salon.jpg"
+    ]
+  },
+  {
+    "file": "lounge",
+    "provider": "pexels",
+    "sourceId": "pexels:26729545",
+    "title": "Luxurious hotel lobby featuring contemporary furniture and ambient lighting.",
+    "author": "Quang Nguyen Vinh",
+    "authorUrl": "https://www.pexels.com/@quang-nguyen-vinh-222549",
+    "sourceUrl": "https://www.pexels.com/photo/interior-of-a-modern-room-in-a-luxury-hotel-26729545/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "attributionRequired": false,
+    "creditLine": "Photo by Quang Nguyen Vinh on Pexels",
+    "downloadedAt": "2026-11-04T14:59:23.841Z",
+    "files": [
+      "public/backgrounds/lounge-1280w.webp",
+      "public/backgrounds/lounge-1280w.jpg",
+      "public/backgrounds/lounge.webp",
+      "public/backgrounds/lounge.jpg"
+    ]
+  },
+  {
+    "file": "gallery",
+    "provider": "pexels",
+    "sourceId": "pexels:15190035",
+    "title": "Capture of grand classical architecture featuring ornate arches and columns in a white interior.",
+    "author": "Kris MÃ¸klebust",
+    "authorUrl": "https://www.pexels.com/@moklebust",
+    "sourceUrl": "https://www.pexels.com/photo/white-classical-vault-15190035/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "attributionRequired": false,
+    "creditLine": "Photo by Kris MÃ¸klebust on Pexels",
+    "downloadedAt": "2026-11-04T14:59:26.345Z",
+    "files": [
+      "public/backgrounds/gallery-1280w.webp",
+      "public/backgrounds/gallery-1280w.jpg",
+      "public/backgrounds/gallery.webp",
+      "public/backgrounds/gallery.jpg"
+    ]
+  },
+  {
+    "file": "watch-on-leather",
+    "provider": "pexels",
+    "sourceId": "pexels:11105247",
+    "title": "Close-up of a vintage Peugeot wristwatch with a leather strap.",
+    "author": "Jose Centenera",
+    "authorUrl": "https://www.pexels.com/@jose-centenera-172636787",
+    "sourceUrl": "https://www.pexels.com/photo/close-up-photo-of-a-peugeot-wristwatch-11105247/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "attributionRequired": false,
+    "creditLine": "Photo by Jose Centenera on Pexels",
+    "downloadedAt": "2026-11-04T14:59:28.586Z",
+    "files": [
+      "public/industries/watch-on-leather-640w.webp",
+      "public/industries/watch-on-leather-640w.jpg",
+      "public/industries/watch-on-leather-1024w.webp",
+      "public/industries/watch-on-leather-1024w.jpg",
+      "public/industries/watch-on-leather.webp",
+      "public/industries/watch-on-leather.jpg"
+    ]
+  },
+  {
+    "file": "folded-tshirts",
+    "provider": "pexels",
+    "sourceId": "pexels:8346226",
+    "title": "A person holding a stack of neatly folded shirts in earthy tones against a soft white background.",
+    "author": "Ron Lach",
+    "authorUrl": "https://www.pexels.com/@ron-lach",
+    "sourceUrl": "https://www.pexels.com/photo/a-person-holding-folded-textile-8346226/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "attributionRequired": false,
+    "creditLine": "Photo by Ron Lach on Pexels",
+    "downloadedAt": "2026-11-04T14:59:30.560Z",
+    "files": [
+      "public/industries/folded-tshirts-640w.webp",
+      "public/industries/folded-tshirts-640w.jpg",
+      "public/industries/folded-tshirts-1024w.webp",
+      "public/industries/folded-tshirts-1024w.jpg",
+      "public/industries/folded-tshirts.webp",
+      "public/industries/folded-tshirts.jpg"
+    ]
+  },
+  {
+    "file": "eyewear-display",
+    "provider": "pexels",
+    "sourceId": "pexels:5202046",
+    "title": "A stylish display of various sunglasses in a modern eyewear store with reflective surfaces.",
+    "author": "https://kaboompics.com/",
+    "authorUrl": "https://www.pexels.com/@karola-g",
+    "sourceUrl": "https://www.pexels.com/photo/sunglasses-showcase-5202046/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "attributionRequired": false,
+    "creditLine": "Photo by https://kaboompics.com/ on Pexels",
+    "downloadedAt": "2026-11-04T14:59:33.059Z",
+    "files": [
+      "public/industries/eyewear-display-640w.webp",
+      "public/industries/eyewear-display-640w.jpg",
+      "public/industries/eyewear-display-1024w.webp",
+      "public/industries/eyewear-display-1024w.jpg",
+      "public/industries/eyewear-display.webp",
+      "public/industries/eyewear-display.jpg"
+    ]
+  },
+  {
+    "file": "warm-living-room-twin-windows",
+    "provider": "unsplash",
+    "sourceId": "unsplash:awsOkT5bksE",
+    "title": "Red Living Room (IG: @clay.banks)",
+    "author": "Clay Banks",
+    "authorUrl": "https://unsplash.com/@claybanks",
+    "sourceUrl": "https://unsplash.com/photos/orange-walled-living-room-with-white-sofa-wooden-table-awsOkT5bksE",
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license",
+    "attributionRequired": false,
+    "creditLine": "Photo by Clay Banks on Unsplash",
+    "downloadedAt": "2026-11-04T15:00:18.080Z",
+    "files": [
+      "public/rooms/warm-living-room-twin-windows-640w.webp",
+      "public/rooms/warm-living-room-twin-windows-640w.jpg",
+      "public/rooms/warm-living-room-twin-windows-1024w.webp",
+      "public/rooms/warm-living-room-twin-windows-1024w.jpg",
+      "public/rooms/warm-living-room-twin-windows.webp",
+      "public/rooms/warm-living-room-twin-windows.jpg"
+    ]
+  },
+  {
+    "file": "grey-room-bare-window",
+    "provider": "unsplash",
+    "sourceId": "unsplash:6u-OwLmA510",
+    "title": "Open living area in a freshly renovated single-story house in Akron, Ohio. Warm wood floors, cool gray paint, white doors and trim, and a picture window facing the yard.",
+    "author": "Josh Lemmon",
+    "authorUrl": "https://unsplash.com/@wolfie_website",
+    "sourceUrl": "https://unsplash.com/photos/empty-room-with-grey-walls-6u-OwLmA510",
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license",
+    "attributionRequired": false,
+    "creditLine": "Photo by Josh Lemmon on Unsplash",
+    "downloadedAt": "2026-11-04T15:00:21.920Z",
+    "files": [
+      "public/rooms/grey-room-bare-window-640w.webp",
+      "public/rooms/grey-room-bare-window-640w.jpg",
+      "public/rooms/grey-room-bare-window-1024w.webp",
+      "public/rooms/grey-room-bare-window-1024w.jpg",
+      "public/rooms/grey-room-bare-window.webp",
+      "public/rooms/grey-room-bare-window.jpg"
+    ]
+  },
+  {
+    "file": "jeweller-workbench",
+    "provider": "pexels",
+    "sourceId": "pexels:7167010",
+    "title": "Close-up of a jeweler using a blowtorch on a work desk, highlighting tools and artisan skills.",
+    "author": "Antoni Shkraba",
+    "authorUrl": "https://www.pexels.com/@shkrabaanthony",
+    "sourceUrl": "https://www.pexels.com/photo/a-person-holding-a-blowtorch-and-a-tweezer-with-a-metal-ring-7167010/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "attributionRequired": false,
+    "creditLine": "Photo by Antoni Shkraba on Pexels",
+    "downloadedAt": "2026-11-04T15:00:24.790Z",
+    "files": [
+      "public/industries/jeweller-workbench-640w.webp",
+      "public/industries/jeweller-workbench-640w.jpg",
+      "public/industries/jeweller-workbench-1024w.webp",
+      "public/industries/jeweller-workbench-1024w.jpg",
+      "public/industries/jeweller-workbench.webp",
+      "public/industries/jeweller-workbench.jpg"
+    ]
+  },
+  {
+    "file": "armchair-minimal-interior",
+    "provider": "pexels",
+    "sourceId": "pexels:6283832",
+    "title": "Comfortable modern styled gray armchair placed near small round marble table with vase of fresh white flowers",
+    "author": "Max Vakhtbovych",
+    "authorUrl": "https://www.pexels.com/@artbovich",
+    "sourceUrl": "https://www.pexels.com/photo/bunch-of-flowers-in-vase-placed-on-marble-table-near-cozy-armchair-6283832/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "attributionRequired": false,
+    "creditLine": "Photo by Max Vakhtbovych on Pexels",
+    "downloadedAt": "2026-11-04T15:00:27.523Z",
+    "files": [
+      "public/industries/armchair-minimal-interior-640w.webp",
+      "public/industries/armchair-minimal-interior-640w.jpg",
+      "public/industries/armchair-minimal-interior-1024w.webp",
+      "public/industries/armchair-minimal-interior-1024w.jpg",
+      "public/industries/armchair-minimal-interior.webp",
+      "public/industries/armchair-minimal-interior.jpg"
+    ]
+  },
+  {
+    "file": "linen-curtain-living-room",
+    "provider": "unsplash",
+    "sourceId": "unsplash:G8jWN3-S6XE",
+    "title": "A sophisticated living space where the floor-to-ceiling linen drapes are the central design feature. EZcurtain's clean lines and effortless elegance perfectly frame the window, elevating the entire room's aesthetic. The rich texture of the custom linen fabric adds a sense of organic warmth and luxury, while the soft folds of the pleats cascade gracefully to the floor. Thanks for using our photo! If you include a link to our website: ezcurtain.com wherever you use it, it would be a huge help to us. If you want more photos, please email collab@ezcurtain.com",
+    "author": "EZcurtain Life",
+    "authorUrl": "https://unsplash.com/@ezcurtainlife",
+    "sourceUrl": "https://unsplash.com/photos/a-bright-living-room-with-neutral-curtains-G8jWN3-S6XE",
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license",
+    "attributionRequired": false,
+    "creditLine": "Photo by EZcurtain Life on Unsplash",
+    "downloadedAt": "2026-11-04T15:00:30.739Z",
+    "files": [
+      "public/industries/linen-curtain-living-room-640w.webp",
+      "public/industries/linen-curtain-living-room-640w.jpg",
+      "public/industries/linen-curtain-living-room-1024w.webp",
+      "public/industries/linen-curtain-living-room-1024w.jpg",
+      "public/industries/linen-curtain-living-room.webp",
+      "public/industries/linen-curtain-living-room.jpg"
+    ]
+  },
+  {
+    "file": "bright-room-centred-window",
+    "provider": "pexels",
+    "sourceId": "pexels:7031616",
+    "title": "Interior of modern spacious light room with wooden laminate floor white walls and panoramic windows",
+    "author": "Max Vakhtbovych",
+    "authorUrl": "https://www.pexels.com/@artbovich",
+    "sourceUrl": "https://www.pexels.com/photo/spacious-room-with-white-walls-and-panoramic-windows-7031616/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "attributionRequired": false,
+    "creditLine": "Photo by Max Vakhtbovych on Pexels",
+    "downloadedAt": "2026-11-04T17:16:24.166Z",
+    "files": [
+      "public/rooms/bright-room-centred-window-640w.webp",
+      "public/rooms/bright-room-centred-window-640w.jpg",
+      "public/rooms/bright-room-centred-window-1280w.webp",
+      "public/rooms/bright-room-centred-window-1280w.jpg",
+      "public/rooms/bright-room-centred-window.webp",
+      "public/rooms/bright-room-centred-window.jpg"
+    ]
+  }
+]

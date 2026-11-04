@@ -1,0 +1,200 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/cormorant-garamond';
+@import '@fontsource-variable/manrope';
+
+/*
+ * Cubiccode design system — light, warm, premium.
+ * Surfaces step from white → ivory → cream → sand to separate sections
+ * without hard dividers. Ink is a near-black navy that sits with the logo;
+ * champagne/gold is the single accent.
+ */
+@theme {
+  --font-display: 'Cormorant Garamond Variable', 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Manrope Variable', 'Manrope', ui-sans-serif, system-ui, sans-serif;
+
+  --color-white: #ffffff;
+  --color-ivory: #fbf8f3;
+  --color-cream: #f6f1e8;
+  --color-pearl: #f2ece2;
+  --color-sand: #e9e0d1;
+  --color-line: #e4dccd;
+  --color-line-soft: #eee8dd;
+
+  --color-champagne: #c9a96e;
+  --color-champagne-soft: #ead9b6;
+  --color-gold: #a8823f;
+  --color-gold-deep: #86672f;
+
+  --color-ink: #161a2c;
+  --color-cocoa: #4a4d5e;
+  --color-muted: #7d7a73;
+  --color-navy: #0c2a8a;
+  --color-rose: #b4574f;
+  --color-success: #2f7a52;
+  --color-danger: #b4433b;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  --shadow-soft: 0 1px 2px rgb(40 34 24 / 0.04), 0 8px 24px -10px rgb(40 34 24 / 0.12);
+  --shadow-lift: 0 2px 6px rgb(40 34 24 / 0.05), 0 28px 56px -24px rgb(40 34 24 / 0.24);
+  --shadow-glass: 0 10px 30px -12px rgb(0 0 0 / 0.35);
+
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-ivory font-sans text-ink antialiased;
+    font-feature-settings: 'ss01', 'cv01';
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-champagne-soft);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@utility eyebrow {
+  @apply text-[11px] font-semibold tracking-[0.22em] text-gold uppercase;
+}
+@utility display {
+  @apply font-display font-semibold tracking-tight text-ink;
+}
+@utility container-lux {
+  @apply mx-auto w-full max-w-[1360px] px-4 sm:px-6 lg:px-10;
+}
+@utility btn {
+  @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold tracking-wide transition-all duration-300 select-none disabled:pointer-events-none disabled:opacity-50;
+  transition-timing-function: var(--ease-lux);
+}
+@utility btn-primary {
+  @apply btn bg-ink text-ivory shadow-soft hover:bg-gold-deep active:translate-y-px;
+}
+@utility btn-gold {
+  @apply btn bg-linear-to-b from-[#d6b97f] to-[#b18d4b] text-white shadow-soft hover:brightness-105 active:translate-y-px;
+}
+@utility btn-ghost {
+  @apply btn border border-line bg-white text-ink hover:border-ink active:translate-y-px;
+}
+@utility btn-link {
+  @apply inline-flex items-center gap-1.5 text-sm font-semibold text-ink underline decoration-champagne decoration-1 underline-offset-[6px] transition-colors hover:text-gold-deep;
+}
+@utility chip {
+  @apply inline-flex min-h-9 items-center justify-center gap-1.5 rounded-full border border-line bg-white px-3.5 text-[12.5px] font-semibold whitespace-nowrap text-cocoa transition-all duration-200 hover:border-champagne hover:text-ink;
+}
+@utility chip-on {
+  @apply chip border-ink bg-ink text-ivory hover:border-ink hover:text-ivory;
+}
+@utility glass {
+  @apply border border-white/60 bg-white/85 text-ink shadow-sm backdrop-blur-sm;
+}
+@utility glass-btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-3.5 py-2 text-[13px] font-semibold text-ink transition-colors duration-200 hover:bg-cream disabled:opacity-40;
+}
+@utility card {
+  @apply rounded-lg border border-line/80 bg-white shadow-soft;
+}
+@utility panel {
+  @apply rounded-xl border border-line/80 bg-white;
+}
+@utility field {
+  @apply w-full rounded-md border border-line bg-white px-3.5 py-3 text-sm text-ink transition-colors placeholder:text-muted/80 focus:border-ink focus:outline-none;
+}
+@utility label {
+  @apply mb-1.5 block text-[11px] font-semibold tracking-[0.14em] text-muted uppercase;
+}
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-sand) transparent;
+}
+
+.shimmer {
+  background: linear-gradient(110deg, var(--color-pearl) 30%, #fffdf9 50%, var(--color-pearl) 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.scan-line {
+  background: linear-gradient(180deg, transparent, rgb(233 217 184 / 0.55), transparent);
+  animation: scan 2.4s var(--ease-lux) infinite;
+}
+@keyframes scan {
+  0% {
+    transform: translateY(-120%);
+  }
+  100% {
+    transform: translateY(420%);
+  }
+}
+
+/* subtle grain used on hero surfaces */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.45 0 0 0 0 0.38 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+input[type='range'].lux-range {
+  @apply h-1 w-full cursor-pointer appearance-none rounded-full bg-sand;
+}
+input[type='range'].lux-range::-webkit-slider-thumb {
+  @apply h-4 w-4 appearance-none rounded-full border-2 border-white bg-ink shadow;
+}
+input[type='range'].lux-range::-moz-range-thumb {
+  @apply h-4 w-4 rounded-full border-2 border-white bg-ink shadow;
+}
+input[type='range'].lux-range-dark {
+  @apply h-1 w-full cursor-pointer appearance-none rounded-full bg-white/25;
+}
+input[type='range'].lux-range-dark::-webkit-slider-thumb {
+  @apply h-4 w-4 appearance-none rounded-full border-2 border-white bg-champagne shadow;
+}
