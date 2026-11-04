@@ -664,17 +664,18 @@ function buildNeck(style: GarmentStyle, pt: Pattern, details: Part[], neckF: { p
 
   if (!isPolo) return;
   // fold-over collar: leaves that lie on the shoulders, open at the front
+  // stand, fold, then the fall lying close over the stand and onto the shoulders
   const prof: [number, number][] = [
     [0, 0.3],
-    [-0.5, 2.3],
-    [-0.35, 3.1],
-    [0.2, 3.35],
-    [1.3, 2.7],
-    [3, 1.3],
-    [5.2, -0.55],
-    [5.75, -1.05],
+    [-0.35, 1.8],
+    [-0.2, 2.5],
+    [0.35, 2.75],
+    [1.05, 2.25],
+    [1.75, 0.9],
+    [2.3, -0.7],
+    [2.6, -1.8],
   ];
-  const profLen = [0, 2, 2.9, 3.5, 4.8, 7, 9.8, 10.6];
+  const profLen = [0, 1.5, 2.2, 2.8, 3.7, 5.3, 7.2, 8.4];
   const leaf: V3[][] = [];
   const leafArc: number[] = [];
   const n = ring.length;
@@ -692,8 +693,8 @@ function buildNeck(style: GarmentStyle, pt: Pattern, details: Part[], neckF: { p
     leaf.push(
       prof.map(([off, up], j) => {
         const f = j / (prof.length - 1);
-        const stretch = 1 + pointy * 0.45 * f;
-        return [r.p[0] + o[0] * off * stretch, r.p[1] + up - pointy * 1.4 * f, r.p[2] + o[2] * off * stretch + pointy * 0.5 * f] as V3;
+        const stretch = 1 + pointy * 0.35 * f;
+        return [r.p[0] + o[0] * off * stretch, r.p[1] + up - pointy * 1.6 * f, r.p[2] + o[2] * off * stretch + pointy * 0.4 * f] as V3;
       }),
     );
     leafArc.push((k / count) * arc);

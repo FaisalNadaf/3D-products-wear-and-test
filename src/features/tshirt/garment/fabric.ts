@@ -78,7 +78,7 @@ function heightAt(id: KnitId, u: number, v: number) {
       return k * 0.72 + thick * 0.62;
     }
     case 'washed':
-      return jersey(u, v, 88, 110) * 0.74 + (noise(u * 26, v * 26, 26) - 0.5) * 0.3 + (noise(u * 90, v * 90, 90) - 0.5) * 0.16;
+      return jersey(u, v, 88, 110) * 0.8 + (noise(u * 90, v * 90, 90) - 0.5) * 0.18;
     default:
       return jersey(u, v, 96, 120) + (noise(u * 40, v * 40, 40) - 0.5) * 0.09;
   }
@@ -89,10 +89,10 @@ function detailAt(id: KnitId, u: number, v: number, h: number) {
   let fleck = 0.5;
   if (id === 'heather') {
     // individual fibres of a darker and lighter yarn, stretched along the courses
-    const f = noise(u * 54, v * 300, 300) * 0.6 + noise(u * 140, v * 420, 420) * 0.4;
-    fleck = Math.min(1, Math.max(0, (f - 0.5) * 3.4 + 0.5));
+    const f = noise(u * 120, v * 480, 480) * 0.55 + noise(u * 260, v * 600, 600) * 0.45;
+    fleck = Math.min(1, Math.max(0, (f - 0.5) * 2.6 + 0.5));
   } else if (id === 'washed') {
-    fleck = 0.5 + (noise(u * 7, v * 7, 7) - 0.5) * 0.9 + (noise(u * 44, v * 44, 44) - 0.5) * 0.45;
+    fleck = 0.5 + (noise(u * 60, v * 60, 60) - 0.5) * 0.5 + (noise(u * 150, v * 150, 150) - 0.5) * 0.4;
   } else if (id === 'slub') {
     fleck = 0.5 + (noise(u * 7, v * 62, 62) * noise(u * 19, v * 62, 62) - 0.25) * 1.1;
   }

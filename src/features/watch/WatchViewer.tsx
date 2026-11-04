@@ -21,7 +21,7 @@ export const CAMERA_PRESETS: { id: CameraPreset; label: string }[] = [
   { id: 'strap', label: 'Strap' },
 ];
 const PRESET_POS: Record<CameraPreset, { pos: [number, number, number]; target: [number, number, number] }> = {
-  hero: { pos: [0.95, 0.85, 1.45], target: [0, -0.2, 0] },
+  hero: { pos: [0.8, 0.72, 1.2], target: [0, -0.16, 0] },
   dial: { pos: [0.02, 0.62, 0.32], target: [0, 0.0, 0.02] },
   crown: { pos: [0.72, 0.14, 0.22], target: [0.12, -0.02, 0] },
   profile: { pos: [1.15, 0.02, 0], target: [0, -0.14, 0] },
@@ -93,7 +93,7 @@ export const WatchViewer = forwardRef<WatchViewerHandle, Props>(function WatchVi
       </Canvas>
       {props.hotspots && (
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          {HOTSPOT_IDS.map((h, i) => (
+          {HOTSPOT_IDS.map((h) => (
             <button
               key={h}
               ref={(el) => {
@@ -102,12 +102,15 @@ export const WatchViewer = forwardRef<WatchViewerHandle, Props>(function WatchVi
               onClick={() => props.onHotspot(h)}
               aria-label={`About the ${h}`}
               style={{ opacity: 0 }}
-              className={`group absolute top-0 left-0 flex h-7 w-7 items-center justify-center rounded-full border text-[11px] font-bold shadow-md transition-[opacity,background-color] duration-300 ${
-                props.activeHotspot === h ? 'border-ink bg-ink text-ivory' : 'border-white bg-white/90 text-ink hover:bg-white'
-              }`}
+              title={`About the ${h}`}
+              className="group absolute top-0 left-0 flex h-8 w-8 items-center justify-center transition-opacity duration-300"
             >
-              <span className="absolute h-7 w-7 animate-ping rounded-full bg-champagne/40 group-hover:hidden" />
-              <span className="relative">{i + 1}</span>
+              {/* a quiet marker: a small ring that fills when its part is open */}
+              <span
+                className={`block h-3 w-3 rounded-full border-2 shadow-[0_0_0_3px_rgba(255,255,255,.35),0_1px_4px_rgba(0,0,0,.35)] transition-[transform,background-color] duration-200 group-hover:scale-125 ${
+                  props.activeHotspot === h ? 'scale-125 border-white bg-ink' : 'border-white bg-white/60'
+                }`}
+              />
             </button>
           ))}
         </div>
@@ -225,7 +228,7 @@ function WatchScene({ product, spec, explode, autoRotate, hotspots, interactive 
         ndc.copy(world).project(camera);
         const x = (ndc.x * 0.5 + 0.5) * size.width;
         const y = (-ndc.y * 0.5 + 0.5) * size.height;
-        el.style.transform = `translate(${x - 14}px, ${y - 14}px)`;
+        el.style.transform = `translate(${x - 16}px, ${y - 16}px)`;
         const hidden = el.dataset.hidden === '1' || ndc.z > 1;
         el.style.opacity = hidden ? '0' : '1';
         el.style.pointerEvents = hidden ? 'none' : 'auto';

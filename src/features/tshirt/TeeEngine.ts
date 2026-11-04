@@ -65,10 +65,10 @@ export interface EngineEvents {
 
 const FABRICS: Record<Fabric, { knit: KnitId; roughness: number; sheen: number; normal: number; fleck: number; cavity: number }> = {
   cotton: { knit: 'jersey', roughness: 0.92, sheen: 0.32, normal: 0.55, fleck: 0, cavity: 0.5 },
-  heather: { knit: 'heather', roughness: 0.94, sheen: 0.28, normal: 0.55, fleck: 0.42, cavity: 0.5 },
-  washed: { knit: 'washed', roughness: 0.97, sheen: 0.42, normal: 0.5, fleck: 0.22, cavity: 0.38 },
+  heather: { knit: 'heather', roughness: 0.94, sheen: 0.28, normal: 0.55, fleck: 0.26, cavity: 0.5 },
+  washed: { knit: 'washed', roughness: 0.97, sheen: 0.42, normal: 0.5, fleck: 0.1, cavity: 0.38 },
   pique: { knit: 'pique', roughness: 0.86, sheen: 0.3, normal: 0.8, fleck: 0, cavity: 0.62 },
-  slub: { knit: 'slub', roughness: 0.93, sheen: 0.3, normal: 0.75, fleck: 0.16, cavity: 0.55 },
+  slub: { knit: 'slub', roughness: 0.93, sheen: 0.3, normal: 0.75, fleck: 0.1, cavity: 0.55 },
 };
 
 const transparentPixel = () => {
@@ -255,7 +255,7 @@ export class TeeEngine {
     }
     const env = pm.fromScene(es, 0.06);
     this.scene.environment = env.texture;
-    this.scene.environmentIntensity = 0.66;
+    this.scene.environmentIntensity = 0.5;
     pm.dispose();
     es.traverse((o) => {
       const m = o as Mesh;
@@ -263,8 +263,9 @@ export class TeeEngine {
       (m.material as Material | undefined)?.dispose();
     });
     this.scene.add(new HemisphereLight(0xffffff, 0xb9b2a6, 0.22));
-    const key = new DirectionalLight(0xfff6ea, 1.45);
-    key.position.set(-2.4, 4.6, 5);
+    // a large window to the upper left: soft, but directional enough for folds to read
+    const key = new DirectionalLight(0xfff6ea, 2.1);
+    key.position.set(-3.6, 4.2, 4.2);
     key.castShadow = true;
     key.shadow.mapSize.set(2048, 2048);
     Object.assign(key.shadow.camera, { left: -3, right: 3, top: 3, bottom: -3, near: 1, far: 14 });
@@ -273,8 +274,8 @@ export class TeeEngine {
     key.shadow.bias = -0.0006;
     key.shadow.normalBias = 0.02;
     this.scene.add(key);
-    const rim = new DirectionalLight(0xffffff, 0.3);
-    rim.position.set(3.5, 1.5, -4);
+    const rim = new DirectionalLight(0xffffff, 0.75);
+    rim.position.set(3.5, 3, -5);
     this.scene.add(rim);
   }
 
@@ -307,7 +308,7 @@ export class TeeEngine {
               ink = mix(pow(ink * 0.9478672986 + 0.0521327014, vec3(2.4)), ink * 0.0773993808, vec3(lessThanEqual(ink, vec3(0.04045))));
               cloth = mix(cloth, ink * mix(1.0, knit.r, 0.5), pr.a);
             }
-            cloth *= mix(1.0, vAO.x, 0.72);
+            cloth *= mix(1.0, vAO.x, 0.85);
           } else {
             // the inside of the garment: the reverse of the knit, in its own shade
             cloth *= 0.9 * mix(0.42, 1.0, vAO.y);
@@ -605,7 +606,8 @@ export class TeeEngine {
   private frame(jump: boolean) {
     const tan = Math.tan((this.camera.fov * Math.PI) / 360);
     const asp = this.camera.aspect || 1;
-    const fit = Math.max((this.size.height * 1.13) / 2 / tan, (this.size.width * 1.1) / 2 / (tan * asp));
+    // room around the garment for the stage's own controls
+    const fit = Math.max((this.size.height * 1.3) / 2 / tan, (this.size.width * 1.16) / 2 / (tan * asp));
     const prev = this.fitDist;
     this.fitDist = fit + this.size.depth / 2;
     this.controls.maxDistance = this.fitDist * 1.5;
@@ -647,7 +649,6 @@ export class TeeEngine {
     const lum = this.goalBody.r * 0.3 + this.goalBody.g * 0.59 + this.goalBody.b * 0.11;
     this.stitchMat.color.copy(this.goalBody).lerp(new Color(lum < 0.1 ? '#ffffff' : '#000000'), lum < 0.1 ? 0.1 : 0.05);
     this.creaseMat.opacity = lum < 0.05 ? 0.7 : 0.36;
-    this.trimMat.color.copy(this.goalBody);
   }
 
   /* ───────────────────────────── painting */
@@ -830,6 +831,12 @@ export class TeeEngine {
         this.dirty = true;
       }
     }
+    // materials hold their own colour, so the eased values are copied in each frame
+    this.bodyMats.front.color.copy(this.bodyColor);
+    this.bodyMats.back.color.copy(this.bodyColor);
+    this.sleeveMats.front.color.copy(this.sleeveColor);
+    this.sleeveMats.back.color.copy(this.sleeveColor);
+    this.trimMat.color.copy(this.bodyColor);
     this.ribMat.color.copy(this.ribColor);
   }
 

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, Navigate } from 'react-router';
 import { PageLoader, SiteLayout } from './components/site/SiteLayout';
 import { NotFound } from './pages/NotFound';
 
@@ -16,7 +16,8 @@ export const router = createBrowserRouter([
       { path: 'watches', lazy: page(() => import('./pages/Watches')) },
       { path: 'tshirt', lazy: page(() => import('./pages/TShirtStudio')) },
       { path: 'curtains', lazy: page(() => import('./pages/CurtainVisualizer')) },
-      { path: 'about', lazy: page(() => import('./pages/About')) },
+      // the capabilities page was retired; old links land on the homepage
+      { path: 'about', element: <Navigate to="/" replace /> },
       { path: 'contact', lazy: page(() => import('./pages/Contact')) },
       { path: '*', element: <NotFound /> },
     ],

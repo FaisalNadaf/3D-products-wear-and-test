@@ -8,12 +8,13 @@ import type { ModelId } from '../../config/models';
 import { buildDisplayGroup, type DisplayGroup } from '../../lib/three/display';
 import { StudioEnvironment, type LightingPreset } from '../three/StudioEnvironment';
 
-export type Backdrop = 'ivory' | 'white' | 'champagne' | 'blush' | 'noir';
+export type Backdrop = 'ivory' | 'white' | 'champagne' | 'blush' | 'red' | 'noir';
 export const BACKDROPS: { id: Backdrop; label: string; css: string }[] = [
   { id: 'ivory', label: 'Ivory', css: 'radial-gradient(ellipse at 50% 35%,#ffffff 0%,#f8f3ea 55%,#ece2d1 100%)' },
   { id: 'white', label: 'White', css: 'radial-gradient(ellipse at 50% 35%,#ffffff 0%,#fbfbfa 60%,#ecebe8 100%)' },
   { id: 'champagne', label: 'Champagne', css: 'radial-gradient(ellipse at 50% 35%,#fbf1dd 0%,#ecd8b2 60%,#d6ba86 100%)' },
   { id: 'blush', label: 'Blush', css: 'radial-gradient(ellipse at 50% 35%,#fdf3f2 0%,#f1d9d6 60%,#dfbcb7 100%)' },
+  { id: 'red', label: 'Velvet red', css: 'radial-gradient(ellipse at 50% 35%,#b8323a 0%,#8c1c26 58%,#5c0f17 100%)' },
   { id: 'noir', label: 'Noir', css: 'radial-gradient(ellipse at 50% 35%,#3a3431 0%,#1b1816 60%,#0d0b0a 100%)' },
 ];
 

@@ -42,8 +42,9 @@ export class BodySDF {
   readonly arm: { x: number; y: number; z: number; angle: number; len: number };
 
   constructor(spec: FormSpec) {
-    const w = spec.cw * 0.82;
-    const d = spec.cw * 0.27;
+    // a real torso: an oversized cut hangs off it rather than inflating it
+    const w = Math.min(spec.cw * 0.8, 22.5);
+    const d = 10.4;
     this.sections = [
       // y, half width, half depth, z centre
       [13, 6, 6.2, -0.8],
@@ -58,7 +59,7 @@ export class BodySDF {
       [-88, w * 0.95, d, -0.1],
     ];
     // the shoulder tip rests on the top of the arm
-    this.arm = { x: Math.max(14, spec.sw - 4), y: -spec.sl - 5.2, z: -0.2, angle: ARM_ANGLE, len: ARM_LEN };
+    this.arm = { x: Math.min(19.5, Math.max(14, spec.sw - 4)), y: -spec.sl - 5.2, z: -0.2, angle: ARM_ANGLE, len: ARM_LEN };
     const [nx, ny, nz] = this.dims;
     this.data = new Float32Array(nx * ny * nz);
     let k = 0;

@@ -21,7 +21,7 @@ export function SiteFooter() {
           </Link>
         </div>
         </div>
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[2fr_1fr]">
           <div>
             <Wordmark className="h-[18px]" />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted">
@@ -30,24 +30,6 @@ export function SiteFooter() {
             </p>
           </div>
           <FooterCol title="Experiences" links={EXPERIENCES.map((e) => [e.title, e.path])} />
-          <FooterCol
-            title="Studio"
-            links={[
-              ['Capabilities', '/about'],
-              ['How we work', '/about#process'],
-              ['Industries', '/#industries'],
-              ['Contact', '/contact'],
-            ]}
-          />
-          <FooterCol
-            title="Technology"
-            links={[
-              ['WebGL & Three.js', '/about#tech'],
-              ['On-device AI', '/about#tech'],
-              ['3D asset pipeline', '/about#tech'],
-              ['Performance', '/about#tech'],
-            ]}
-          />
         </div>
       </div>
       <div className="border-t border-line">

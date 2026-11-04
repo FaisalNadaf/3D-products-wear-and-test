@@ -6,10 +6,8 @@ interface Toast {
 }
 
 interface ShopState {
-  bag: string[];
   wishlist: Set<string>;
   toasts: Toast[];
-  addToBag: (id: string, name: string) => void;
   toggleWish: (id: string, name: string) => void;
   notify: (message: string) => void;
   dismiss: (id: number) => void;
@@ -34,7 +32,6 @@ function save(key: string, value: unknown) {
 }
 
 export function ShopProvider({ children }: { children: ReactNode }) {
-  const [bag, setBag] = useState<string[]>(() => load('suvarna.bag', []));
   const [wishlist, setWishlist] = useState<Set<string>>(() => new Set(load<string[]>('suvarna.wish', [])));
   const [toasts, setToasts] = useState<Toast[]>([]);
 
@@ -46,17 +43,6 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       window.setTimeout(() => dismiss(id), 3200);
     },
     [dismiss],
-  );
-  const addToBag = useCallback(
-    (id: string, name: string) => {
-      setBag((b) => {
-        const next = [...b, id];
-        save('suvarna.bag', next);
-        return next;
-      });
-      notify(`${name} added to your bag`);
-    },
-    [notify],
   );
   const toggleWish = useCallback(
     (id: string, name: string) => {
@@ -72,8 +58,8 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ bag, wishlist, toasts, addToBag, toggleWish, notify, dismiss }),
-    [bag, wishlist, toasts, addToBag, toggleWish, notify, dismiss],
+    () => ({ wishlist, toasts, toggleWish, notify, dismiss }),
+    [wishlist, toasts, toggleWish, notify, dismiss],
   );
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 }

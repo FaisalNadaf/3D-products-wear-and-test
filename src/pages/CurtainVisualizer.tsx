@@ -191,7 +191,8 @@ export default function CurtainVisualizer() {
     crossFade();
     setCurtain(c);
     setSettings((s) => settingsFor(c, s));
-    if (view === 'before') setView('after');
+    // the first curtain opens in the comparison, so the change is obvious
+    if (!curtain || view === 'before') setView('split');
     setPlacing(false);
   };
   const pickColor = (color: string) => {

@@ -805,6 +805,75 @@ export class ParametricWatch {
     return g;
   }
 
+  /**
+   * One bracelet link: a rounded bar swept along the strap curve between t0
+   * and t1, offset x across the strap. `dome` crowns its top face; the ends
+   * are radiused so neighbouring links read as separate pieces.
+   */
+  private linkSweep(curve: CatmullRomCurve3, t0: number, t1: number, x: number, width: number, thick: number, dome: number) {
+    const along = 10;
+    const ring = 20;
+    const len = curve.getLength() * (t1 - t0);
+    const pos: number[] = [];
+    const idx: number[] = [];
+    const P = new Vector3();
+    const Tg = new Vector3();
+    const X = new Vector3(1, 0, 0);
+    const N = new Vector3();
+    const cy = profile?.cy ?? CUSHION.cy;
+    const cz = profile?.cz ?? 0;
+    const endR = Math.min(0.45, len * 0.18);
+    for (let i = 0; i <= along; i++) {
+      const u = i / along;
+      curve.getPointAt(t0 + (t1 - t0) * u, P);
+      curve.getTangentAt(t0 + (t1 - t0) * u, Tg);
+      N.crossVectors(Tg, X).normalize();
+      if (N.dot(new Vector3(0, P.y - cy, P.z - cz).normalize()) < 0) N.negate();
+      // radiused ends: the section shrinks over the last endR millimetres
+      const d = Math.min(u, 1 - u) * len;
+      const e = d >= endR ? 1 : Math.sqrt(Math.max(0, 1 - Math.pow(1 - d / endR, 2)));
+      // machined links: square ends with a small chamfer, not pillows
+      const w = (width / 2) * (0.93 + 0.07 * e);
+      const h = (thick / 2) * (0.82 + 0.18 * e);
+      for (let j = 0; j <= ring; j++) {
+        const a = (j / ring) * Math.PI * 2;
+        const ca = Math.cos(a);
+        const sa = Math.sin(a);
+        const sx = Math.sign(ca) * Math.pow(Math.abs(ca), 0.12) * w;
+        let sy = Math.sign(sa) * Math.pow(Math.abs(sa), 0.14) * h;
+        if (sa > 0) sy += dome * (1 - Math.pow(sx / Math.max(w, 1e-3), 2)) * e;
+        pos.push(P.x + x + X.x * sx + N.x * sy, P.y + N.y * sy, P.z + N.z * sy);
+      }
+    }
+    for (let i = 0; i < along; i++)
+      for (let j = 0; j < ring; j++) {
+        const a = i * (ring + 1) + j;
+        const b = a + ring + 1;
+        idx.push(a, a + 1, b, b, a + 1, b + 1);
+      }
+    // end caps
+    for (const i of [0, along]) {
+      const base = i * (ring + 1);
+      let mx = 0;
+      let my = 0;
+      let mz = 0;
+      for (let j = 0; j < ring; j++) {
+        mx += pos[(base + j) * 3];
+        my += pos[(base + j) * 3 + 1];
+        mz += pos[(base + j) * 3 + 2];
+      }
+      const c = pos.length / 3;
+      pos.push(mx / ring, my / ring, mz / ring);
+      for (let j = 0; j < ring; j++) idx.push(...(i === 0 ? [c, base + j + 1, base + j] : [c, base + j, base + j + 1]));
+    }
+    const g = new BufferGeometry();
+    g.setAttribute('position', new Float32BufferAttribute(pos, 3));
+    g.setAttribute('uv', new Float32BufferAttribute(new Array((pos.length / 3) * 2).fill(0), 2));
+    g.setIndex(idx);
+    g.computeVertexNormals();
+    return g;
+  }
+
   private buildStrap() {
     const g = this.clear('strap');
     const s = this.spec;
@@ -812,38 +881,36 @@ export class ParametricWatch {
     const lw = this.geo.lugWidth;
     const taper = (t: number) => lw * (1 - 0.2 * Math.sin(t * Math.PI));
     if (s.strap === 'bracelet' || s.strap === 'jubilee') {
+      // every link is swept along the cushion, so it follows its curve with
+      // only a hairline between neighbours, like a real bracelet
       const len = curve.getLength();
-      const pitch = s.strap === 'jubilee' ? 5.2 : 7.2;
-      const n = Math.min(160, Math.floor(len / pitch));
+      const pitch = s.strap === 'jubilee' ? 4.6 : 6.4;
+      const n = Math.min(200, Math.floor(len / pitch));
+      const gap = 0.22 / len;
       const outer: BufferGeometry[] = [];
       const centre: BufferGeometry[] = [];
-      const P = new Vector3();
-      const Tg = new Vector3();
       for (let i = 0; i < n; i++) {
-        const t = (i + 0.5) / n;
-        curve.getPointAt(t, P);
-        curve.getTangentAt(t, Tg);
-        const Nn = new Vector3().crossVectors(Tg, new Vector3(1, 0, 0)).normalize();
-        if (Nn.dot(new Vector3(0, P.y - (profile?.cy ?? CUSHION.cy), P.z - (profile?.cz ?? 0)).normalize()) < 0) Nn.negate();
-        const basis = new Matrix4().makeBasis(new Vector3(1, 0, 0), Nn, Tg).setPosition(P);
-        const w = taper(t);
-        const thick = 2.6;
-        const clasp = Math.abs(t - 0.5) < 0.06;
-        if (clasp) {
-          outer.push(at(new RoundedBoxGeometry(w * 0.95, thick, pitch * 0.98, 2, 0.8), basis.clone()));
+        const t0 = i / n + gap / 2;
+        const t1 = (i + 1) / n - gap / 2;
+        const tm = (t0 + t1) / 2;
+        const w = taper(tm);
+        if (Math.abs(tm - 0.5) < 0.05) {
+          // fold-over clasp cover: one wide, polished plate
+          centre.push(this.linkSweep(curve, t0, t1, 0, w * 0.96, 3, 0.55));
           continue;
         }
         if (s.strap === 'jubilee') {
-          for (const [x, ww] of [
-            [-0.36, 0.26],
-            [0.36, 0.26],
-          ] as const)
-            outer.push(at(new RoundedBoxGeometry(w * ww, thick, pitch * 0.92, 2, 0.7), mul(basis.clone(), T(x * w, 0, 0))));
-          for (const x of [-0.13, 0, 0.13]) centre.push(at(new RoundedBoxGeometry(w * 0.12, thick * 0.85, pitch * (x === 0 ? 0.9 : 0.6), 2, 0.5), mul(basis.clone(), T(x * w, 0.2, x === 0 ? 0 : pitch * 0.2))));
+          // five rows: brushed outer links, small polished links between them
+          outer.push(this.linkSweep(curve, t0, t1, -0.385 * w, 0.23 * w, 2.6, 0.12));
+          outer.push(this.linkSweep(curve, t0, t1, 0.385 * w, 0.23 * w, 2.6, 0.12));
+          for (const x of [-0.165, 0.165]) centre.push(this.linkSweep(curve, t0, t1, x * w, 0.12 * w, 2.3, 0.35));
+          // the middle row sits half a link along, as on a five-piece bracelet
+          const half = (t1 - t0 + gap) / 2;
+          if (i < n - 1) centre.push(this.linkSweep(curve, t0 + half, t1 + half, 0, 0.12 * w, 2.3, 0.35));
         } else {
-          outer.push(at(new RoundedBoxGeometry(w * 0.28, thick, pitch * 0.95, 2, 0.8), mul(basis.clone(), T(-0.355 * w, 0, 0))));
-          outer.push(at(new RoundedBoxGeometry(w * 0.28, thick, pitch * 0.95, 2, 0.8), mul(basis.clone(), T(0.355 * w, 0, 0))));
-          centre.push(at(new RoundedBoxGeometry(w * 0.4, thick * 0.92, pitch * 0.95, 2, 0.8), basis.clone()));
+          outer.push(this.linkSweep(curve, t0, t1, -0.355 * w, 0.285 * w, 2.8, 0.1));
+          outer.push(this.linkSweep(curve, t0, t1, 0.355 * w, 0.285 * w, 2.8, 0.1));
+          centre.push(this.linkSweep(curve, t0, t1, 0, 0.405 * w, 2.6, 0.28));
         }
       }
       g.add(toMesh(outer, this.brushedMat, 'bracelet-outer'));

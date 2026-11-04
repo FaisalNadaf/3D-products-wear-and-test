@@ -47,13 +47,19 @@ Products are data, so new items don't touch the rendering engines.
 
 ## How each experience works
 
-**Jewellery.** MediaPipe's facial transformation matrix maps canonical face coordinates (centimetres) into a 63° pinhole camera, so models sit at real scale. Anchors are refined per frame from nearby landmarks, and One Euro filters remove jitter. Pose landmarks place necklaces; a head-based estimate is used when shoulders are out of frame. Depth-only occluders hide what is behind the head and neck. The selfie segmenter drives background replacement on a compositor canvas beneath the WebGL layer, so tracking and the overlay are unaffected.
+**Jewellery.** MediaPipe's facial transformation matrix maps canonical face coordinates (centimetres) into a 63° pinhole camera, so models sit at real scale. Anchors are refined per frame from nearby landmarks, and One Euro filters remove jitter. Necklaces sit on the wearer's measured neck: `neckFit.ts` samples the person's skin tone from the cheeks, then scans below the chin for the neck's width, centre and the collar or shoulder line. Pose landmarks, then a head-based estimate, are the fallbacks. A depth-only shoulder crest lets chains pass out of sight beside the neck. Depth-only occluders hide what is behind the head and neck. The selfie segmenter drives background replacement on a compositor canvas beneath the WebGL layer, so tracking and the overlay are unaffected.
 
 **Watches.** `ParametricWatch` builds case, lugs, crown, bezel, crystal, dial, hands, movement and strap in millimetres and rebuilds only what an option changes. Straps drape along the display cushion's cross-section, measured from the GLB's vertices. `ReferenceChronograph` drives the reference GLB with the same option set.
 
-**T-shirts.** `TeeEngine` is a typed port of the supplied `3d-tshirts` project: one procedural silhouette inflated into front and back panels, printed from per-side canvases through planar UVs, with dragging by raycast. It adds fits, a polo collar, sleeve print zones, a layer document and export.
+**T-shirts.** Each style (3 fits × 2 sleeve lengths × 5 necklines) is a real sewing pattern (`garment/pattern.ts`): front, back and two sleeves drafted in centimetres, with sleeve caps solved to match their armholes. `scripts/garment/bake.ts` sews the panels and drapes them over a dress form with a position-based cloth simulation, bakes ambient occlusion, and writes `public/garment/<style>.bin` (110 KB each). At runtime `garment/mesh.ts` builds the cloth, rib collar, hems turned up to show their thickness, seam lines, twin-needle stitching, plackets and buttons; `garment/fabric.ts` generates tiling knit normal maps per fabric. Changing style morphs between drapes. Prints are drawn on transparent canvases mapped through the flat pattern at 28 px per cm, so artwork keeps its true size and the print files are print-ready.
 
-**Curtains.** Windows are found by brightness and shape analysis, by MediaPipe's interactive segmenter on a tap, or by dragging four corners. The quad gives a homography, decomposed into a camera pose (`npx tsx scripts/tests/curtain-pose.test.ts` verifies reprojection). Fabric is real 3D cloth rendered over the photo. Sheers use physical transmission, so the actual window refracts through them. No generative AI is involved; a remote model could replace `detectWindowAt` behind the same return type.
+Rebaking all 30 styles takes about 12 minutes on six cores:
+
+```bash
+for f in regular oversized slim; do for s in half full; do for n in round vneck scoop polo henley; do echo "$f-$s-$n"; done; done; done | xargs -P 6 -I{} npx tsx scripts/garment/bake.ts {}
+```
+
+**Curtains.** The page is three steps: choose a room (a sample or the customer's own photo), choose a curtain, then compare before and after with a slider and adjust width, length, height and opening. Windows in uploaded photos are found by brightness and shape analysis, by MediaPipe's interactive segmenter on a tap ("Find it"), or by dragging corners and edges. The quad gives a homography, decomposed into a camera pose (`npx tsx scripts/tests/curtain-pose.test.ts` verifies reprojection). Fabric is real 3D cloth rendered over the photo. Daylight measured from the window in the photo glows through the cloth in proportion to the weave, and sheers let the view show through. No generative AI is involved; a remote model could replace `detectWindowAt` behind the same return type.
 
 ## Asset pipeline
 
@@ -62,6 +68,7 @@ npm run models                 # rebuild jewellery GLBs from src/lib/three/build
 node scripts/thumbnails.mjs    # jewellery card images (dev server running; needs Playwright + Pillow)
 node scripts/watch-thumbs.mjs  # watch thumbnails from the live configurator
 node scripts/showcase.mjs      # homepage and navigation images
+node scripts/curtain-thumbs.mjs # curtain card images, rendered by the real curtain engine
 npx tsx scripts/optimize-glb.ts in.glb out.glb [nodeToRemove,...]
 ```
 

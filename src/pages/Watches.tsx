@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Camera, Check, ChevronDown, ChevronRight, Layers, Link2, Maximize2, Minimize2, RotateCcw, Rotate3d, ShoppingBag, X } from 'lucide-react';
+import { Camera, Check, ChevronDown, ChevronRight, Layers, Link2, Maximize2, Minimize2, RotateCcw, Rotate3d, X, ArrowRight } from 'lucide-react';
 import { Seo } from '../components/site/Seo';
 import { InView, Reveal, SectionHeading } from '../components/site/Reveal';
 import { useFullscreen } from '../hooks/useFullscreen';
@@ -59,13 +59,14 @@ export default function Watches() {
   const [autoRotate, setAutoRotate] = useState(false);
   // ?clean=1 hides overlays (used to render collection thumbnails)
   const clean = params.get('clean') === '1';
-  const [hotspots, setHotspots] = useState(!clean);
+  // part markers start hidden so the watch reads clean; the Hotspots toggle shows them
+  const [hotspots, setHotspots] = useState(false);
   const [active, setActive] = useState<HotspotId | null>(null);
   const [copied, setCopied] = useState(false);
   const viewer = useRef<WatchViewerHandle>(null);
   const stage = useRef<HTMLDivElement>(null);
   const fs = useFullscreen(stage);
-  const { addToBag, notify } = useShop();
+  const { notify } = useShop();
   const price = watchPrice(product, spec);
 
   const choose = useCallback((w: WatchProduct) => {
@@ -217,12 +218,12 @@ export default function Watches() {
             <div className="flex gap-1.5">
               <ToggleBtn on={explode > 0} onClick={() => setExplode((e) => (e > 0 ? 0 : 1))} icon={<Layers className="h-4 w-4" />} label="Exploded view" />
               <ToggleBtn on={autoRotate} onClick={() => setAutoRotate((a) => !a)} icon={<Rotate3d className="h-4 w-4" />} label="Rotate" />
-              <ToggleBtn on={hotspots} onClick={() => setHotspots((h) => !h)} icon={<span className="flex h-4 w-4 items-center justify-center rounded-full border-2 border-current text-[8px] font-bold">1</span>} label="Hotspots" />
+              <ToggleBtn on={hotspots} onClick={() => setHotspots((h) => !h)} icon={<span className="flex h-4 w-4 items-center justify-center rounded-full border-2 border-current"><span className="h-1.5 w-1.5 rounded-full bg-current" /></span>} label="Hotspots" />
             </div>
           </div>
         </div>
 
-        <Configurator product={product} spec={spec} set={set} has={has} price={price} onReset={() => setSpec(product.defaults)} onShare={share} copied={copied} onAdd={() => addToBag(`${product.id}`, product.name)} />
+        <Configurator product={product} spec={spec} set={set} has={has} price={price} onReset={() => setSpec(product.defaults)} onShare={share} copied={copied} quote={`/contact?about=${encodeURIComponent(`${product.name} watch, configured: ${location.href}`)}`} />
       </section>
 
       <WatchStory product={product} spec={spec} />
@@ -277,7 +278,7 @@ function Configurator({
   onReset,
   onShare,
   copied,
-  onAdd,
+  quote,
 }: {
   product: WatchProduct;
   spec: WatchSpec;
@@ -287,7 +288,7 @@ function Configurator({
   onReset: () => void;
   onShare: () => void;
   copied: boolean;
-  onAdd: () => void;
+  quote: string;
 }) {
   const fixed = product.source.kind === 'glb';
   return (
@@ -367,9 +368,9 @@ function Configurator({
           <span className="text-xl font-bold text-gold-deep">{formatPrice(price)}</span>
         </div>
         <div className="mt-3 flex gap-2">
-          <button onClick={onAdd} className="btn-primary flex-1">
-            <ShoppingBag className="h-4 w-4" /> Add to bag
-          </button>
+          <Link to={quote} className="btn-primary flex-1">
+            Request a quote <ArrowRight className="h-4 w-4" />
+          </Link>
           <button onClick={onShare} className="btn-ghost px-3.5" aria-label="Copy configuration link" title="Copy configuration link">
             {copied ? <Check className="h-4 w-4 text-success" /> : <Link2 className="h-4 w-4" />}
           </button>

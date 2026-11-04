@@ -65,6 +65,4 @@ export const EXPERIENCES: Experience[] = [
 export const NAV = [
   { label: 'Home', path: '/' },
   { label: 'Experiences', path: '/jewellery', children: EXPERIENCES },
-  { label: 'Capabilities', path: '/about' },
-  { label: 'Contact', path: '/contact' },
 ];

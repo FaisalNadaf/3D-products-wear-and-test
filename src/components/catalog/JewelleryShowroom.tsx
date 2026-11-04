@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import { Heart, Maximize2, Minimize2, ShoppingBag } from 'lucide-react';
+import { Link } from 'react-router';
+import { ArrowRight, Heart, Maximize2, Minimize2 } from 'lucide-react';
 import { formatPrice, productsIn, type CategoryId, type Product } from '../../config/catalog';
 import type { ModelId } from '../../config/models';
 import { useShop } from '../../state/shop';
@@ -20,9 +21,9 @@ interface Props {
 /** Dedicated 3D presentation mode: inspect any piece under different lighting. */
 export function JewelleryShowroom({ product, category, onProduct, onCategory }: Props) {
   const [lighting, setLighting] = useState<LightingPreset>('studio');
-  const [backdrop, setBackdrop] = useState<Backdrop>('ivory');
+  const [backdrop, setBackdrop] = useState<Backdrop>('red');
   const [piece, setPiece] = useState<number | 'all'>('all');
-  const { addToBag, toggleWish, wishlist } = useShop();
+  const { toggleWish, wishlist } = useShop();
   const stage = useRef<HTMLDivElement>(null);
   const fs = useFullscreen(stage);
   useEffect(() => setPiece('all'), [product.id]);
@@ -107,9 +108,9 @@ export function JewelleryShowroom({ product, category, onProduct, onCategory }: 
         </div>
 
         <div className="mt-5 flex gap-2">
-          <button className="btn-primary flex-1" onClick={() => addToBag(product.id, product.name)}>
-            <ShoppingBag className="h-4 w-4" /> Add to bag
-          </button>
+          <Link className="btn-primary flex-1" to={`/contact?about=${encodeURIComponent(`${product.name} (${product.metal})`)}`}>
+            Request a quote <ArrowRight className="h-4 w-4" />
+          </Link>
           <button
             className="btn-ghost px-3.5"
             onClick={() => toggleWish(product.id, product.name)}

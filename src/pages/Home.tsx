@@ -1,7 +1,7 @@
 import { lazy, Suspense, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router';
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
-import { ArrowRight, ArrowUpRight, Boxes, Check, Cpu, Glasses, Layers, MonitorSmartphone, Palette, ScanFace, ShieldCheck, Sofa, Sparkles, SplitSquareHorizontal, Watch, Wand2, Zap } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Boxes, Check, Glasses, Layers, MonitorSmartphone, Palette, ScanFace, Sofa, Sparkles, SplitSquareHorizontal, Watch, Wand2 } from 'lucide-react';
 import { Seo } from '../components/site/Seo';
 import { InView, Reveal, SectionHeading } from '../components/site/Reveal';
 import { EXPERIENCES, type Experience } from '../config/site';
@@ -28,7 +28,6 @@ export default function Home() {
       <Capabilities />
       <HowItWorks />
       <Industries />
-      <WhyUs />
       <Inquiry />
     </>
   );
@@ -246,7 +245,7 @@ function CurtainSection() {
       visual={
         <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-line shadow-lift">
           <img src={`${B}showcase/curtains.webp`} alt="Room with rendered linen curtains" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-          <img src={`${B}rooms/warm-living-room-twin-windows.webp`} alt="The same room before curtains" loading="lazy" className="absolute inset-0 h-full w-full object-cover" style={{ clipPath: `inset(0 0 0 ${v}%)` }} />
+          <img src={`${B}rooms/bright-room-centred-window.webp`} alt="The same room before curtains" loading="lazy" className="absolute inset-0 h-full w-full object-cover" style={{ clipPath: `inset(0 0 0 ${v}%)` }} />
           <div className="pointer-events-none absolute inset-y-0 w-0.5 bg-white shadow" style={{ left: `${v}%` }}>
             <span className="absolute top-1/2 left-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white text-ink shadow-lift">
               <SplitSquareHorizontal className="h-4 w-4" />
@@ -286,9 +285,6 @@ function Capabilities() {
             </Reveal>
           ))}
         </div>
-        <Link to="/about" className="btn-link mt-8">
-          See all capabilities <ArrowRight className="h-4 w-4" />
-        </Link>
       </div>
     </section>
   );
@@ -355,31 +351,6 @@ function Industries() {
   );
 }
 
-function WhyUs() {
-  const items = [
-    { icon: Zap, t: 'Fast on real devices', b: 'Assets are compressed and lazy-loaded, and each experience loads only when it’s opened.' },
-    { icon: ShieldCheck, t: 'Private by design', b: 'Try-on and room photos are processed in the browser, not uploaded.' },
-    { icon: Cpu, t: 'Standard, open technology', b: 'Three.js, WebGL and GLB. No plugins, and no lock-in to a proprietary viewer.' },
-    { icon: Layers, t: 'Easy to extend', b: 'Products live in config files, so new items don’t touch the rendering engine.' },
-  ];
-  return (
-    <section className="bg-ivory py-20 lg:py-28">
-      <div className="container-lux grid gap-12 lg:grid-cols-[1fr_1.3fr]">
-        <SectionHeading eyebrow="Why choose our technology" title="Impressive, and practical to run" />
-        <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
-          {items.map((x, i) => (
-            <Reveal key={x.t} delay={i * 0.06}>
-              <x.icon className="h-5 w-5 text-gold" strokeWidth={1.6} />
-              <h3 className="mt-3 text-[16px] font-semibold">{x.t}</h3>
-              <p className="mt-1.5 text-[14px] leading-relaxed text-cocoa">{x.b}</p>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Inquiry() {
   return (
     <section className="bg-white py-20 lg:py-28">
@@ -391,9 +362,6 @@ function Inquiry() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/contact" className="btn-primary px-6">
               Start a project <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link to="/about" className="btn-ghost px-6">
-              See our capabilities
             </Link>
           </div>
         </div>

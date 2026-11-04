@@ -1,0 +1,26 @@
+# Netlify must build the site and publish dist/. Publishing the project folder
+# itself serves index.html pointing at /src/main.tsx, which browsers cannot run
+# (a blank page).
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# fingerprinted build files never change, so they can be cached for a year
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/mediapipe/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# client-side routes (/watches, /tshirt, ...) all load the app
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -74,6 +74,7 @@ export function simulate(pt: Pattern, opts: { steps?: number; seed?: number; log
   // initial placement: body panels wrap the form, meeting along the shoulders
   const x = new Float64Array(count * 3);
   const placed = new Uint8Array(count);
+  const pinned = new Set<number>();
   const place = (idx: number, px: number, py: number, pz: number) => {
     if (placed[idx]) return;
     x[idx * 3] = px;
@@ -97,7 +98,10 @@ export function simulate(pt: Pattern, opts: { steps?: number; seed?: number; log
         const fade = Math.min(1, Math.max(0, (shoulderY - y) / 9));
         const onShoulder = j === 0 && i >= 0 && (i <= pt.ns || i >= p.nc - pt.ns);
         const depth = onShoulder ? 0 : (b + 3.5) * Math.sqrt(1 - t * t) * (fade * fade * (3 - 2 * fade));
-        place(ids2[gridIndex(p, i, j)], px, y, sg * Math.max(depth, onShoulder ? 0 : 0.01));
+        place(ids2[gridIndex(p, i, j)], px, onShoulder ? y - 0.6 : y, sg * Math.max(depth, onShoulder ? 0 : 0.01));
+        // the garment hangs from its shoulder seams, as on a ghost mannequin
+        // only along the wearer's own shoulders: a dropped shoulder falls over the arm
+        if (onShoulder && Math.abs(px) <= Math.min(m.sw, m.nw + 8.5)) pinned.add(ids2[gridIndex(p, i, j)]);
       }
   }
   // sleeves: loft from the armhole ring to a ring around the arm
@@ -190,17 +194,21 @@ export function simulate(pt: Pattern, opts: { steps?: number; seed?: number; log
   opts.log?.(`particles ${count}, constraints ${nCon}`);
 
   const prev = Float64Array.from(x);
+  const inv = new Float64Array(count).fill(1);
+  for (const i of pinned) inv[i] = 0;
   const dt = 1 / 120;
-  const g = 420 * dt * dt;
+  const g = 760 * dt * dt;
   const out = new Float64Array(4);
   const margin = 0.5;
   const stiffStretch = [1, 0.8, 0.16, 1];
-  const stiffCompress = [0.4, 0.3, 0.16, 0.9];
-  const iters = 12;
+  // knit resists stretching but gives easily under compression, so it buckles into folds
+  const stiffCompress = [0.22, 0.18, 0.04, 0.9];
+  const iters = 14;
   for (let step = 0; step < steps; step++) {
     const damp = step < steps * 0.65 ? 0.985 : 0.93;
     const grav = g * Math.min(1, step / 150);
     for (let i = 0; i < count; i++) {
+      if (!inv[i]) continue;
       const i3 = i * 3;
       for (let a = 0; a < 3; a++) {
         const cur = x[i3 + a];
@@ -220,15 +228,19 @@ export function simulate(pt: Pattern, opts: { steps?: number; seed?: number; log
         const d = Math.sqrt(dx * dx + dy * dy + dz * dz) || 1e-9;
         const err = d - nL[c];
         const k = err > 0 ? stiffStretch[nK[c]] : stiffCompress[nK[c]];
-        const f = (0.5 * k * err) / d;
-        x[a] += dx * f;
-        x[a + 1] += dy * f;
-        x[a + 2] += dz * f;
-        x[b] -= dx * f;
-        x[b + 1] -= dy * f;
-        x[b + 2] -= dz * f;
+        const wa = inv[nA[c]];
+        const wb = inv[nB[c]];
+        if (wa + wb === 0) continue;
+        const f = (k * err) / d / (wa + wb);
+        x[a] += dx * f * wa;
+        x[a + 1] += dy * f * wa;
+        x[a + 2] += dz * f * wa;
+        x[b] -= dx * f * wb;
+        x[b + 1] -= dy * f * wb;
+        x[b + 2] -= dz * f * wb;
       }
       for (let i = 0; i < count; i++) {
+        if (!inv[i]) continue;
         const i3 = i * 3;
         sdf.sample(x[i3], x[i3 + 1], x[i3 + 2], out);
         if (out[0] < margin) {

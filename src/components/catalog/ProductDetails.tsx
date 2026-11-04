@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { BadgeCheck, Heart, RefreshCcw, ShieldCheck, ShoppingBag, Truck } from 'lucide-react';
+import { Link } from 'react-router';
+import { ArrowRight, BadgeCheck, Heart, RefreshCcw, ShieldCheck, Truck } from 'lucide-react';
 import { CATEGORIES, formatPrice, type Product } from '../../config/catalog';
 import type { ModelId } from '../../config/models';
 import { useShop } from '../../state/shop';
@@ -18,7 +19,7 @@ const PIECE_LABEL: Partial<Record<ModelId, string>> = {
 };
 
 export function ProductDetails({ product, onTryOn }: { product: Product; onTryOn: () => void }) {
-  const { addToBag, toggleWish, wishlist } = useShop();
+  const { toggleWish, wishlist } = useShop();
   const isSet = product.pieces.length > 1;
   const [view, setView] = useState<'all' | number>('all');
   useEffect(() => setView('all'), [product.id]);
@@ -42,7 +43,7 @@ export function ProductDetails({ product, onTryOn }: { product: Product; onTryOn
         <div className="relative">
           <div className="aspect-[4/3.4] w-full sm:aspect-[4/3]">
             <Suspense fallback={<div className="shimmer h-full w-full rounded-xl" />}>
-              <Product3DViewer pieces={pieces} label={product.name} />
+              <Product3DViewer pieces={pieces} label={product.name} backdrop="red" />
             </Suspense>
           </div>
           {isSet && (
@@ -97,9 +98,9 @@ export function ProductDetails({ product, onTryOn }: { product: Product; onTryOn
           </ul>
 
           <div className="mt-7 flex flex-col gap-2.5 sm:flex-row">
-            <button className="btn-primary flex-1 py-3.5" onClick={() => addToBag(product.id, product.name)}>
-              <ShoppingBag className="h-4 w-4" /> Add to bag
-            </button>
+            <Link className="btn-primary flex-1 py-3.5" to={`/contact?about=${encodeURIComponent(`${product.name} (${product.metal})`)}`}>
+              Request a quote <ArrowRight className="h-4 w-4" />
+            </Link>
             <button className="btn-ghost py-3.5" onClick={onTryOn}>
               Try it on
             </button>

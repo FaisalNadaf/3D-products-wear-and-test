@@ -108,16 +108,6 @@ export function SiteNavbar() {
               )}
             </AnimatePresence>
           </li>
-          <li>
-            <NavLink to="/about" className={link}>
-              Capabilities
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/contact" className={link}>
-              Contact
-            </NavLink>
-          </li>
         </ul>
 
         <div className="flex items-center gap-2">
@@ -165,12 +155,6 @@ export function SiteNavbar() {
                   </Link>
                 ))}
               </div>
-              <Link to="/about" className="mt-6 border-b border-line py-3.5 font-display text-2xl">
-                Capabilities
-              </Link>
-              <Link to="/contact" className="border-b border-line py-3.5 font-display text-2xl">
-                Contact
-              </Link>
               <Link to="/contact" className="btn-primary mt-8">
                 Start a project
               </Link>
